@@ -147,7 +147,7 @@ public class Main {
            System.out.println(" Press 2 for Customer");
            choice = scanner.nextInt();
            switch (choice){
-               case 1:{
+               case 1:{ //mein for admin
                    boolean Safety=true;
                    while(Safety) {
                        System.out.println("Enter Admin Name");
@@ -215,7 +215,7 @@ public class Main {
                        }
                    }
                }
-               case 2: {
+               case 2: { // main for customer
                    while (true) {
                        System.out.println("-------------------------");
                        System.out.println("          MENU ");
