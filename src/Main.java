@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 // product list , mat management classes
@@ -40,8 +41,6 @@ class Product{
         this.productIndex = productIndex;
     }
 }
-
-
 class ProductList {
     protected ArrayList<Product> allProductInMart;
 
@@ -74,13 +73,12 @@ class ProductList {
     }
 
 }
-
 class Admin {
 
     private final String adminName;
-    private final int adminPassword;
+    private final String adminPassword;
 
-    public Admin(String a, int b){
+    public Admin(String a, String b){
         this.adminName = a;
         this.adminPassword = b;
     }
@@ -89,7 +87,7 @@ class Admin {
         return adminName;
     }
 
-    public int getAdminPassword() {
+    public String getAdminPassword() {
         return adminPassword;
     }
 
@@ -141,6 +139,8 @@ public class Main {
         productsForMart.addProduct(new Product("Product 5", 250, 5));
 
 
+        Admin adminnew = new Admin("Steven " , "abcd1234" );
+
        while (true) {
            int choice;
            System.out.println(" Press 1 for Admin");
@@ -148,6 +148,20 @@ public class Main {
            choice = scanner.nextInt();
            switch (choice){
                case 1:{
+                   boolean Safety=true;
+                   while(Safety) {
+                       System.out.println("Enter Admin Name");
+                       String admin_name = scanner.nextLine();
+                       System.out.println("Enter Admin Password");
+                       String admin_password = scanner.nextLine();
+
+                       if (Objects.equals(admin_name, adminnew.getAdminName()) && Objects.equals(admin_password, adminnew.getAdminPassword())){
+                           Safety = false;
+                       break;
+                        }
+                       else
+                           Safety = true;
+                   }
                    while (true) {
                        System.out.println("-------------------------");
                        System.out.println("          MENU ");
@@ -208,9 +222,10 @@ public class Main {
                        System.out.println("-------------------------\n");
                        System.out.println("1. Show Products");
                        System.out.println("2. Add Product to Cart");
-                       System.out.println("3. Delete Product Product from Cart");
-                       System.out.println("4. Generate Bill");
-                       System.out.println("5. Exit");
+                       System.out.println("3. Delete Product from Cart");
+                       System.out.println("4. Show Product from Cart");
+                       System.out.println("5. Generate Bill");
+                       System.out.println("6. Exit");
                        System.out.print("Enter your choice: ");
                        int choice2 = scanner.nextInt();
                        scanner.nextLine(); // Consume newline
@@ -223,6 +238,10 @@ public class Main {
                            case 3:
                                break;
                            case 4:
+                               break;
+                           case 5:
+                               break;
+                           case 6:
                                break;
                            default:
                                System.out.println("Invalid choice");
