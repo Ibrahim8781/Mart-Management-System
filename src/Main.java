@@ -1,4 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +17,11 @@ class Product{
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
 
     public int getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(int productPrice) {
-        this.productPrice = productPrice;
-    }
 
     public int getProductIndex() {
         return productIndex;
@@ -43,38 +36,6 @@ class Product{
         this.productPrice = productPrice;
         this.productIndex = productIndex;
     }
-}
-class ProductList {
-    protected ArrayList<Product> allProductInMart;
-
-    public ProductList() {
-        allProductInMart = new ArrayList<>();
-    }
-
-    // aik product bnay ga constructor say with having all product details from manager
-    protected void addProduct(Product abc) {
-        allProductInMart.add(abc);
-    }
-
-    public void removeProduct(int abc){
-
-        for (Product productForCounter: allProductInMart) {
-            if(productForCounter.getProductIndex() == abc) {
-                allProductInMart.remove(productForCounter);
-                System.out.println("Product Removed Successfully");
-                break;
-            }
-        }
-
-    }
-
-    void showProducts(){
-        System.out.println("Displaying all Products");
-        for ( Product productForCounter : allProductInMart ) {
-            System.out.println(" ID = " + productForCounter.getProductIndex() + " Name " + productForCounter.getProductName() + " Price " + productForCounter.getProductPrice() );
-        }
-    }
-
 }
 class Admin {
 
@@ -103,25 +64,56 @@ class Admin {
     }
 
 }
+class ProductList {
+    protected ArrayList<Product> allProductInMart;
+
+    public ProductList() {
+        allProductInMart = new ArrayList<>();
+    }
+
+    // aik product  ga constructor say with having all product details from manager
+    protected void addProduct(Product abc) {
+        allProductInMart.add(abc);
+    }
+
+    public void removeProduct(int abc){
+
+        for (Product productForCounter: allProductInMart) {
+            if(productForCounter.getProductIndex() == abc) {
+                allProductInMart.remove(productForCounter);
+                System.out.println("Product Removed Successfully");
+                break;
+            }
+        }
+
+    }
+
+
+    void showProducts(){
+        System.out.println("Displaying all Products");
+        for ( Product productForCounter : allProductInMart ) {
+            System.out.println(" ID = " + productForCounter.getProductIndex() + " Name " + productForCounter.getProductName() + " Price " + productForCounter.getProductPrice() );
+        }
+    }
+
+}
 
 class Cart {
-    private static final int MAX_ITEMS = 5;  // Maximum number of items in the cart
+//    private static final int MAX_ITEMS = 5;  // Maximum number of items in the cart
     private List<Product> cartItems;
 
     public Cart() {
         cartItems = new ArrayList<>();
     }
 
-    public boolean addProductToCart(Product product) {
-        if (cartItems.size() < MAX_ITEMS) {
-            cartItems.add(product);
-            return true;
-        } else {
-            System.out.println("Sorry, the cart is full. Cannot add more items.");
-            return false;
+    public void addToCart(int index , ProductList abc){
+        for ( Product productForCounter : abc.allProductInMart ) {
+            if(productForCounter.getProductIndex() == index) {
+                this.cartItems.add(productForCounter);
+                break;
+            }
         }
     }
-
     public void displayCartContents() {
         System.out.println("Cart Contents:");
         for (Product product : cartItems) {
@@ -136,7 +128,7 @@ class Cart {
         for (Product product : cartItems) {
             if(product.getProductIndex() == index){
                 cartItems.remove(product);
-                System.out.println("Product Removed Succesfully");
+                System.out.println("Product Removed Successfully");
             }
         }
 
@@ -155,12 +147,13 @@ class Cart {
 class Customer{
     private final String customerName;
     private final String customerCity;
-    private final int maxNumberOfItemInCart = 5;
+//    private final int maxNumberOfItemInCart = 5;
     /*protected List <Product> productList;*/
-    private Cart CustomerCart = new Cart();
+    protected Cart CustomerCart ;
     public Customer(String customerName, String customerCity) {
         this.customerName = customerName;
         this.customerCity = customerCity;
+        CustomerCart = new Cart();
     }
 
     public String getCustomerName() {
@@ -188,27 +181,26 @@ public class Main {
         productsForMart.addProduct(new Product("Product 5", 250, 5));
 
 
-        Admin adminnew = new Admin("Steven " , "abcd1234" );
+        Admin admin1 = new Admin("Steven " , "abcd1234" );
 
        while (true) {
            int choice;
            System.out.println(" Press 1 for Admin");
            System.out.println(" Press 2 for Customer");
            choice = scanner.nextInt();
-           switch (choice){
-               case 1:{ //mein for admin
-                   boolean Safety=true;
-                   while(Safety) {
+           switch (choice) {
+               case 1 -> { //mein for admin
+                   boolean Safety = true;
+                   while (Safety) {
                        System.out.println("Enter Admin Name");
                        String admin_name = scanner.nextLine();
                        System.out.println("Enter Admin Password");
                        String admin_password = scanner.nextLine();
 
-                       if (Objects.equals(admin_name, adminnew.getAdminName()) && Objects.equals(admin_password, adminnew.getAdminPassword())){
+                       if (Objects.equals(admin_name, admin1.getAdminName()) && Objects.equals(admin_password, admin1.getAdminPassword())) {
                            Safety = false;
-                       break;
-                        }
-                       else
+                           break;
+                       } else
                            Safety = true;
                    }
                    while (true) {
@@ -226,26 +218,26 @@ public class Main {
 
                        switch (choice2) {
                            case 1:
-                               String name ;
-                               int price , index;
+                               String name;
+                               int price, index;
                                System.out.println("Enter product name");
                                name = scanner.nextLine();
                                System.out.println("Enter Product Price");
-                               price= scanner.nextInt();
+                               price = scanner.nextInt();
                                System.out.println("Enter Product Index");
-                               index= scanner.nextInt();
-                               Product abc = new Product(name , price , index);
+                               index = scanner.nextInt();
+                               Product abc = new Product(name, price, index);
                                productsForMart.addProduct(abc);
                                break;
                            case 2:
                                System.out.println("Enter Update product name");
                                name = scanner.nextLine();
                                System.out.println("Enter Updated Product Price");
-                               price= scanner.nextInt();
+                               price = scanner.nextInt();
                                System.out.println("Enter Product Index");
-                               index= scanner.nextInt();
+                               index = scanner.nextInt();
 
-                               Product updatedProduct = new Product(name , price , index);
+                               Product updatedProduct = new Product(name, price, index);
                                productsForMart.addProduct(updatedProduct);
 
                                break;
@@ -264,7 +256,15 @@ public class Main {
                        }
                    }
                }
-               case 2: { // main for customer
+               case 2 -> { // main for customer
+
+                   System.out.println("Enter Customer Name ");
+                   String customer_name = scanner.nextLine();
+                   System.out.println("Enter Customer City ");
+                   String customer_city = scanner.nextLine();
+
+                   Customer customer1 = new Customer(customer_name, customer_city);
+
                    while (true) {
                        System.out.println("-------------------------");
                        System.out.println("          MENU ");
@@ -285,23 +285,33 @@ public class Main {
                                productsForMart.showProducts();
                                break;
                            case 2:
-
+                               //
+                               System.out.println(" Displaying your cart contents down below ");
+                               customer1.CustomerCart.displayCartContents();
+                               System.out.println(" Enter the Index of Product You want to remove ");
+                               int ProductChoiceToRemove = scanner.nextInt();
+                               customer1.CustomerCart.removeProduct(ProductChoiceToRemove);
                                break;
                            case 3:
+                               System.out.println(" Enter the index of product you want to add ");
+                               int Product1 = scanner.nextInt();
+                               customer1.CustomerCart.addToCart(Product1, productsForMart);
                                break;
                            case 4:
+                               customer1.CustomerCart.displayCartContents();
                                break;
                            case 5:
+                               customer1.CustomerCart.generateBill();
                                break;
                            case 6:
+                               System.out.println(" Exiting ...");
                                break;
                            default:
                                System.out.println("Invalid choice");
                        }
                    }
                }
-               default:
-                   System.out.println("Invalid Choice");
+               default -> System.out.println("Invalid Choice");
            }
 
 
