@@ -1,4 +1,7 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -101,17 +104,63 @@ class Admin {
 
 }
 
+class Cart {
+    private static final int MAX_ITEMS = 5;  // Maximum number of items in the cart
+    private List<Product> cartItems;
 
+    public Cart() {
+        cartItems = new ArrayList<>();
+    }
+
+    public boolean addProductToCart(Product product) {
+        if (cartItems.size() < MAX_ITEMS) {
+            cartItems.add(product);
+            return true;
+        } else {
+            System.out.println("Sorry, the cart is full. Cannot add more items.");
+            return false;
+        }
+    }
+
+    public void displayCartContents() {
+        System.out.println("Cart Contents:");
+        for (Product product : cartItems) {
+            System.out.println("Name: " + product.getProductName());
+            System.out.println("Price: $" + product.getProductPrice());
+            System.out.println("Index: " + product.getProductIndex());
+            System.out.println("---------------------------");
+        }
+    }
+
+    public void removeProduct(int index){
+        for (Product product : cartItems) {
+            if(product.getProductIndex() == index){
+                cartItems.remove(product);
+                System.out.println("Product Removed Succesfully");
+            }
+        }
+
+    }
+
+    public void generateBill(){
+        double totalPrice = 0;
+        for (Product product : cartItems) {
+            totalPrice = totalPrice + product.getProductPrice();
+        }
+        System.out.println("The total Bill of Your Cart is  Rs " + totalPrice + " /- " );
+    }
+
+    // Add methods to calculate the total cost, remove products, etc.
+}
 class Customer{
     private final String customerName;
     private final String customerCity;
     private final int maxNumberOfItemInCart = 5;
     /*protected List <Product> productList;*/
-    ArrayList<Product> Cart ;
+    private Cart CustomerCart = new Cart();
     public Customer(String customerName, String customerCity) {
         this.customerName = customerName;
         this.customerCity = customerCity;
-        Cart = new ArrayList<>();
     }
 
     public String getCustomerName() {
@@ -232,8 +281,11 @@ public class Main {
 
                        switch (choice2) {
                            case 1:
+                               System.out.println("Displaying Products");
+                               productsForMart.showProducts();
                                break;
                            case 2:
+
                                break;
                            case 3:
                                break;
