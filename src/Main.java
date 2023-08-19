@@ -167,6 +167,7 @@ class Customer{
 }
 
 
+
 public class Main {
     public static void main(String[] args) {
 
@@ -188,22 +189,24 @@ public class Main {
            System.out.println(" Press 1 for Admin");
            System.out.println(" Press 2 for Customer");
            choice = scanner.nextInt();
+           boolean Safety = true;
            switch (choice) {
                case 1 -> { //mein for admin
-                   boolean Safety = true;
-                   while (Safety) {
-                       System.out.println("Enter Admin Name");
-                       String admin_name = scanner.nextLine();
-                       System.out.println("Enter Admin Password");
-                       String admin_password = scanner.nextLine();
 
-                       if (Objects.equals(admin_name, admin1.getAdminName()) && Objects.equals(admin_password, admin1.getAdminPassword())) {
-                           Safety = false;
+                       System.out.println("Enter Admin Name");
+                       String admin_name = scanner.next();
+
+                       System.out.println("Enter Admin Password");
+                       String admin_password = scanner.next();
+                       /*if ((Objects.equals(admin_name, admin1.getAdminName())) && (Objects.equals(admin_password, admin1.getAdminPassword())) ){
                            break;
-                       } else
-                           Safety = true;
-                   }
-                   while (true) {
+                       } else {
+                           System.out.println(" Invalid Credentials ");
+                           //break;
+                       }*/
+
+                   boolean boolForAdminMenu = true;
+                   while (boolForAdminMenu) {
                        System.out.println("-------------------------");
                        System.out.println("          MENU ");
                        System.out.println("-------------------------\n");
@@ -217,42 +220,37 @@ public class Main {
                        scanner.nextLine(); // Consume newline
 
                        switch (choice2) {
-                           case 1:
-                               String name;
-                               int price, index;
+                           case 1 -> {
                                System.out.println("Enter product name");
-                               name = scanner.nextLine();
+                               String name = scanner.nextLine();
                                System.out.println("Enter Product Price");
-                               price = scanner.nextInt();
+                               int price = scanner.nextInt();
                                System.out.println("Enter Product Index");
-                               index = scanner.nextInt();
+                               int index = scanner.nextInt();
                                Product abc = new Product(name, price, index);
                                productsForMart.addProduct(abc);
-                               break;
-                           case 2:
+                           }
+                           case 2 -> {
                                System.out.println("Enter Update product name");
-                               name = scanner.nextLine();
+                               String name = scanner.nextLine();
                                System.out.println("Enter Updated Product Price");
-                               price = scanner.nextInt();
+                               int price = scanner.nextInt();
                                System.out.println("Enter Product Index");
-                               index = scanner.nextInt();
-
+                               int index = scanner.nextInt();
                                Product updatedProduct = new Product(name, price, index);
                                productsForMart.addProduct(updatedProduct);
-
-                               break;
-                           case 3:
+                           }
+                           case 3 -> {
                                System.out.println("Enter the index to remove Product");
                                int indexOfRemovingProduct = scanner.nextInt();
-
                                productsForMart.removeProduct(indexOfRemovingProduct);
-                               break;
-                           case 4:
+                           }
+                           case 4 -> {
                                System.out.println("Displaying Products");
                                productsForMart.showProducts();
-                               break;
-                           default:
-                               System.out.println("Invalid choice");
+                           }
+                           case 5 -> boolForAdminMenu = false;
+                           default -> System.out.println("Invalid choice");
                        }
                    }
                }
