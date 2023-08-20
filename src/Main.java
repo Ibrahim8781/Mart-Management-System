@@ -254,6 +254,8 @@ public class Main {
                        }
                    }
                }
+/*
+               // case 2 not working properly
                case 2 -> { // main for customer
 
                    System.out.println("Enter Customer Name ");
@@ -309,6 +311,7 @@ public class Main {
                        }
                    }
                }
+*/
                default -> System.out.println("Invalid Choice");
            }
 
