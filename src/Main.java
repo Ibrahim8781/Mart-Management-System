@@ -5,8 +5,6 @@ Software Engineering
 */
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -34,9 +32,6 @@ class Product{
         return productIndex;
     }
 
-    public void setProductIndex(int productIndex) {
-        this.productIndex = productIndex;
-    }
 
     public Product(String productName, int productPrice, int productIndex) {
         this.productName = productName;
@@ -54,20 +49,36 @@ class Admin {
         this.adminPassword = b;
     }
 
-    public String getAdminName() {
-        return adminName;
-    }
 
-    public String getAdminPassword() {
-        return adminPassword;
+    public void updateProductAdmin( int indexOfProductToBeUpdate , Product updatedproduct , ProductList allProductsinMart) {
+        for (Product productForCounter: allProductsinMart.allProducts) {
+            if(productForCounter.getProductIndex() == indexOfProductToBeUpdate) {
+                allProductsinMart.allProducts.add(productForCounter);
+                System.out.println("Product Updated Successfully");
+
+                return;
+            }
+        }
+        System.out.println(" => Invalid Index is Submitted ");
+
+
     }
 
     public void addProductAdmin(Product abc, ProductList productListForAdmin){
         productListForAdmin.allProducts.add(abc);
     }
 
-    public void removeProductAdmin(Product abc, ProductList productListForAdmin){
-        productListForAdmin.allProducts.remove(abc);
+    public void removeProductAdmin(int abc, ProductList productListForAdmin){
+
+        for (Product productForCounter: productListForAdmin.allProducts) {
+            if(productForCounter.getProductIndex() == abc) {
+                productListForAdmin.allProducts.remove(productForCounter);
+                System.out.println("Product Removed Successfully");
+
+                return;
+            }
+        }
+        System.out.println(" => Invalid Index is Submitted ");
     }
 
 }
@@ -83,6 +94,7 @@ class ProductList {
         allProducts.add(abc);
     }
 
+/*
     public void removeProduct(int abc){
 
         for (Product productForCounter: allProducts) {
@@ -95,6 +107,7 @@ class ProductList {
 
     }
 
+*/
 
     void showProductsForMart(){
         System.out.println("Displaying all Products");
@@ -278,24 +291,28 @@ public class Main {
                                System.out.println(" => Enter Product Index");
                                int index = scanner.nextInt();
                                Product newProduct = new Product(name, price, index);
-                               productsForMart.addProduct(newProduct);
+                               admin1.addProductAdmin(newProduct , productsForMart);
                            }
                            case 2 -> {
+
+                               System.out.println(" => Enter Product Index");
+                               int IndexOfProductTobeUpdated = scanner.nextInt();
+
                                System.out.println(" => Enter the Update Product name ");
                                String name = scanner.nextLine();
                                System.out.println(" => Enter Updated Product Price");
                                int price = scanner.nextInt();
-                               System.out.println(" => Enter Product Index");
-                               int index = scanner.nextInt();
-                               Product updatedProduct = new Product(name, price, index);
-                               productsForMart.addProduct(updatedProduct);
+
+
+                               Product updatedProduct = new Product(name, price , IndexOfProductTobeUpdated);
+                               admin1.updateProductAdmin( IndexOfProductTobeUpdated , updatedProduct, productsForMart);
                            }
                            case 3 -> {
                                System.out.println(" => Enter the Index of Product to remove from Inventory ");
                                productsForMart.showProductsForMart();
 
                                int indexOfRemovingProduct = scanner.nextInt();
-                               productsForMart.removeProduct(indexOfRemovingProduct);
+                               admin1.removeProductAdmin(indexOfRemovingProduct,productsForMart);
                            }
                            case 4 -> {
                                System.out.println(" => Displaying Current Products in Inventory ");
@@ -321,7 +338,7 @@ public class Main {
 
                    while (true) {
                        System.out.println("-------------------------");
-                       System.out.println("-  CUSTOMER   MENU      -");
+                       System.out.println("-    CUSTOMER   MENU    -");
                        System.out.println("-------------------------\n");
                        System.out.println("1). Show Products in Inventory                 2). Add Product to Cart ");
                        System.out.println("3). Remove Product to Cart                     4). Show Product from Cart ");
