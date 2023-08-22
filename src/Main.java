@@ -216,6 +216,10 @@ class Customer{
 public class Main {
     public static void main(String[] args) {
 
+        System.out.println("------------------------------");
+        System.out.println("    Welcome to SAAS Mart ");
+        System.out.println("------------------------------");
+
         Scanner scanner = new Scanner(System.in);
 
         ProductList productsForMart = new ProductList();
@@ -228,11 +232,13 @@ public class Main {
 
 
         Admin admin1 = new Admin("Steven " , "abcd1234" );
+        System.out.println("------------------------------");
+        System.out.println("   Select Your Role Please ");
+        System.out.println("------------------------------");
 
-       while (true) {
+        while (true) {
            int choice;
-           System.out.println(" Press 1 for Admin");
-           System.out.println(" Press 2 for Customer");
+           System.out.println(" Kindly Press 1). Admin 2). Customer");
            choice = scanner.nextInt();
            boolean Safety = true;
            switch (choice) {
@@ -240,7 +246,6 @@ public class Main {
 
                        System.out.println("Enter Admin Name");
                        String admin_name = scanner.next();
-
                        System.out.println("Enter Admin Password");
                        String admin_password = scanner.next();
                        /*if ((Objects.equals(admin_name, admin1.getAdminName())) && (Objects.equals(admin_password, admin1.getAdminPassword())) ){
@@ -252,50 +257,53 @@ public class Main {
 
                    boolean boolForAdminMenu = true;
                    while (boolForAdminMenu) {
+                       System.out.println();
                        System.out.println("-------------------------");
-                       System.out.println("          MENU ");
+                       System.out.println("-      ADMIN  MENU      -");
                        System.out.println("-------------------------\n");
-                       System.out.println("1. Add Product");
-                       System.out.println("2. Edit Product");
-                       System.out.println("3. Delete Product");
-                       System.out.println("4. Display Product");
-                       System.out.println("5. Exit");
+                       System.out.println("1). Add Product                 2). Edit Product");
+                       System.out.println("3). Delete Product               4).Display Product");
+                       System.out.println("5). Exit");
+
                        System.out.print("Enter your choice: ");
                        int choice2 = scanner.nextInt();
                        scanner.nextLine(); // Consume newline
 
                        switch (choice2) {
                            case 1 -> {
-                               System.out.println("Enter product name");
+                               System.out.println(" => Enter Product Name you want to add in Inventory");
                                String name = scanner.nextLine();
-                               System.out.println("Enter Product Price");
+                               System.out.println(" => Enter Product Price");
                                int price = scanner.nextInt();
-                               System.out.println("Enter Product Index");
+                               System.out.println(" => Enter Product Index");
                                int index = scanner.nextInt();
-                               Product abc = new Product(name, price, index);
-                               productsForMart.addProduct(abc);
+                               Product newProduct = new Product(name, price, index);
+                               productsForMart.addProduct(newProduct);
                            }
                            case 2 -> {
-                               System.out.println("Enter Update product name");
+                               System.out.println(" => Enter the Update Product name ");
                                String name = scanner.nextLine();
-                               System.out.println("Enter Updated Product Price");
+                               System.out.println(" => Enter Updated Product Price");
                                int price = scanner.nextInt();
-                               System.out.println("Enter Product Index");
+                               System.out.println(" => Enter Product Index");
                                int index = scanner.nextInt();
                                Product updatedProduct = new Product(name, price, index);
                                productsForMart.addProduct(updatedProduct);
                            }
                            case 3 -> {
-                               System.out.println("Enter the index to remove Product");
+                               System.out.println(" => Enter the Index of Product to remove from Inventory ");
+                               productsForMart.showProductsForMart();
+
                                int indexOfRemovingProduct = scanner.nextInt();
                                productsForMart.removeProduct(indexOfRemovingProduct);
                            }
                            case 4 -> {
-                               System.out.println("Displaying Products");
+                               System.out.println(" => Displaying Current Products in Inventory ");
                                productsForMart.showProductsForMart();
                            }
                            case 5 -> exit(0);
-                           default -> System.out.println("Invalid choice");
+
+                           default -> System.out.println(" => Invalid choice");
                        }
                    }
                }
@@ -303,46 +311,42 @@ public class Main {
                // case 2 not working properly
                case 2 -> { // main for customer
 
-                   System.out.println("Enter Customer Name ");
-                   String customer_name = scanner.nextLine();
-/*
-                   System.out.println("Enter Customer City ");
-                   String customer_city = scanner.nextLine();
-*/
+                   System.out.println("Enter Your Name Please");
+                   String customer_name = scanner.next();
+                   System.out.println("Enter Your City ");
+                   String customer_city = scanner.next();
 
-                   Customer customer1 = new Customer(customer_name, "customer_city");
+
+                   Customer customer1 = new Customer(customer_name, customer_city);
 
                    while (true) {
                        System.out.println("-------------------------");
-                       System.out.println("          MENU ");
+                       System.out.println("-  CUSTOMER   MENU      -");
                        System.out.println("-------------------------\n");
-                       System.out.println("1. Show Products");
-                       System.out.println("2. Remove Product to Cart");
-                       System.out.println("3. Add Product to Cart");
-                       System.out.println("4. Show Product from Cart");
-                       System.out.println("5. Generate Bill");
-                       System.out.println("6. Exit");
-                       System.out.print("Enter your choice: ");
+                       System.out.println("1). Show Products in Inventory                 2). Add Product to Cart ");
+                       System.out.println("3). Remove Product to Cart                     4). Show Product from Cart ");
+                       System.out.println("5). Generate Bill                              6). Exit ");
+                       System.out.print("Enter your choice kindly :");
                        int choice2 = scanner.nextInt();
                        scanner.nextLine(); // Consume newline
 
                        switch (choice2) {
                            case 1:
-                               System.out.println("Displaying Products");
+                               System.out.println(" => Displaying Products From Inventory ");
                                productsForMart.showProductsForMart();
                                break;
-                           case 2:
+                           case 3:
                                //
-                               System.out.println(" Displaying your cart contents down below ");
+                               System.out.println(" => Displaying your Cart Products down below ");
                                customer1.ProductDisplayOfCustomerCart();
-                               System.out.println(" Enter the Index of Product You want to remove ");
+                               System.out.println(" => Enter the Index of Product You want to Remove ");
                                int ProductChoiceToRemove = scanner.nextInt();
                                customer1.removeProductByCustomer(ProductChoiceToRemove);
                                break;
-                           case 3:
-                               System.out.println(" Displaying the Products in Mart");
+                           case 2:
+                               System.out.println(" => Displaying the Products from Mart Inventory ");
                                productsForMart.showProductsForMart();
-                               System.out.println(" Enter the index of product you want to add ");
+                               System.out.println(" => Enter the Index of Product you want to Add ");
                                int ProductIndexToAdd = scanner.nextInt();
                                customer1.addProductByCustomer(productsForMart, ProductIndexToAdd);
                                break;
