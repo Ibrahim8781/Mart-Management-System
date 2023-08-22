@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e6779c5-3c7f-4967-a831-a1463c7e3b88" name="Changes" comment="Error in Admin's Main is resolved" />
+    <list default="true" id="0e6779c5-3c7f-4967-a831-a1463c7e3b88" name="Changes" comment="&quot; &quot;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,13 +80,29 @@
       <option name="project" value="LOCAL" />
       <updated>1692470760806</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Bugs were identified and comments were added">
+      <created>1692548245923</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692548245923</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot; &quot;">
+      <created>1692634597789</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1692634597789</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Customer's Cart and other Customer Functionalities wer added.Main for Customers is implemented" />
     <MESSAGE value="Customer Add to Cart and Main all cases are implemented" />
     <MESSAGE value="Error in Admin's Main is resolved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Error in Admin's Main is resolved" />
+    <MESSAGE value="Bugs were identified and comments were added" />
+    <MESSAGE value="&quot; &quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot; &quot;" />
   </component>
 </project>

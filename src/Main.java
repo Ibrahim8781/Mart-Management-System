@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 // product list , mat management classes
 // attributes for mart management system
 // name address id number item in cart max item, Item in cart(arraylist) ,  price After Purchase(arraylist)
@@ -61,31 +63,31 @@ class Admin {
     }
 
     public void addProductAdmin(Product abc, ProductList productListForAdmin){
-        productListForAdmin.allProductInMart.add(abc);
+        productListForAdmin.allProducts.add(abc);
     }
 
     public void removeProductAdmin(Product abc, ProductList productListForAdmin){
-        productListForAdmin.allProductInMart.remove(abc);
+        productListForAdmin.allProducts.remove(abc);
     }
 
 }
 class ProductList {
-    protected ArrayList<Product> allProductInMart;
+    protected ArrayList<Product> allProducts;
 
     public ProductList() {
-        allProductInMart = new ArrayList<>();
+        allProducts = new ArrayList<>();
     }
 
     // aik product  ga constructor say with having all product details from manager
     protected void addProduct(Product abc) {
-        allProductInMart.add(abc);
+        allProducts.add(abc);
     }
 
     public void removeProduct(int abc){
 
-        for (Product productForCounter: allProductInMart) {
+        for (Product productForCounter: allProducts) {
             if(productForCounter.getProductIndex() == abc) {
-                allProductInMart.remove(productForCounter);
+                allProducts.remove(productForCounter);
                 System.out.println("Product Removed Successfully");
                 break;
             }
@@ -94,15 +96,16 @@ class ProductList {
     }
 
 
-    void showProducts(){
+    void showProductsForMart(){
         System.out.println("Displaying all Products");
-        for ( Product productForCounter : allProductInMart ) {
+        for ( Product productForCounter : allProducts ) {
             System.out.println(" ID = " + productForCounter.getProductIndex() + " Name " + productForCounter.getProductName() + " Price " + productForCounter.getProductPrice() );
         }
     }
 
 }
 
+/*
 class Cart {
 //    private static final int MAX_ITEMS = 5;  // Maximum number of items in the cart
     private List<Product> cartItems;
@@ -149,16 +152,17 @@ class Cart {
 
     // Add methods to calculate the total cost, remove products, etc.
 }
+*/
 class Customer{
     private final String customerName;
     private final String customerCity;
 //    private final int maxNumberOfItemInCart = 5;
     /*protected List <Product> productList;*/
-    protected Cart CustomerCart ;
+    protected ProductList CustomerCart ;
     public Customer(String customerName, String customerCity) {
         this.customerName = customerName;
         this.customerCity = customerCity;
-        CustomerCart = new Cart();
+        CustomerCart = new ProductList();
     }
 
     public String getCustomerName() {
@@ -167,6 +171,42 @@ class Customer{
 
     public String getCustomerCity() {
         return customerCity;
+    }
+
+    public void addProductByCustomer(ProductList allProductsInMart , int indexOfProductToAdd){
+        for ( Product productForCounter : allProductsInMart.allProducts ) {
+            if(productForCounter.getProductIndex() == indexOfProductToAdd) {
+                //this.CustomerCart.add(productForCounter);
+                this.CustomerCart.allProducts.add(productForCounter);
+                break;
+            }
+        }
+    }
+
+    public void removeProductByCustomer(int indexOfProductToRemove){
+        for ( Product productForCounter : CustomerCart.allProducts ) {
+            if(productForCounter.getProductIndex() == indexOfProductToRemove) {
+                this.CustomerCart.allProducts.remove(productForCounter);
+                break;
+            }
+        }
+    }
+
+    public void ProductDisplayOfCustomerCart(){
+            System.out.println("Cart Contents:");
+            for (Product product : CustomerCart.allProducts) {
+                System.out.print("ID: " + product.getProductIndex());
+                System.out.print(" Name: " + product.getProductName());
+                System.out.print(" Price: $" + product.getProductPrice());
+            }
+
+    }
+    public void generateBill(){
+        double totalPrice = 0;
+        for (Product product : CustomerCart.allProducts) {
+            totalPrice = totalPrice + product.getProductPrice();
+        }
+        System.out.println("The total Bill of Your Cart is  Rs " + totalPrice + " /- " );
     }
 
 }
@@ -252,31 +292,33 @@ public class Main {
                            }
                            case 4 -> {
                                System.out.println("Displaying Products");
-                               productsForMart.showProducts();
+                               productsForMart.showProductsForMart();
                            }
-                           case 5 -> boolForAdminMenu = false;
+                           case 5 -> exit(0);
                            default -> System.out.println("Invalid choice");
                        }
                    }
                }
-/*
+
                // case 2 not working properly
                case 2 -> { // main for customer
 
                    System.out.println("Enter Customer Name ");
                    String customer_name = scanner.nextLine();
+/*
                    System.out.println("Enter Customer City ");
                    String customer_city = scanner.nextLine();
+*/
 
-                   Customer customer1 = new Customer(customer_name, customer_city);
+                   Customer customer1 = new Customer(customer_name, "customer_city");
 
                    while (true) {
                        System.out.println("-------------------------");
                        System.out.println("          MENU ");
                        System.out.println("-------------------------\n");
                        System.out.println("1. Show Products");
-                       System.out.println("2. Add Product to Cart");
-                       System.out.println("3. Delete Product from Cart");
+                       System.out.println("2. Remove Product to Cart");
+                       System.out.println("3. Add Product to Cart");
                        System.out.println("4. Show Product from Cart");
                        System.out.println("5. Generate Bill");
                        System.out.println("6. Exit");
@@ -287,36 +329,39 @@ public class Main {
                        switch (choice2) {
                            case 1:
                                System.out.println("Displaying Products");
-                               productsForMart.showProducts();
+                               productsForMart.showProductsForMart();
                                break;
                            case 2:
                                //
                                System.out.println(" Displaying your cart contents down below ");
-                               customer1.CustomerCart.displayCartContents();
+                               customer1.ProductDisplayOfCustomerCart();
                                System.out.println(" Enter the Index of Product You want to remove ");
                                int ProductChoiceToRemove = scanner.nextInt();
-                               customer1.CustomerCart.removeProduct(ProductChoiceToRemove);
+                               customer1.removeProductByCustomer(ProductChoiceToRemove);
                                break;
                            case 3:
+                               System.out.println(" Displaying the Products in Mart");
+                               productsForMart.showProductsForMart();
                                System.out.println(" Enter the index of product you want to add ");
-                               int Product1 = scanner.nextInt();
-                               customer1.CustomerCart.addToCart(Product1, productsForMart);
+                               int ProductIndexToAdd = scanner.nextInt();
+                               customer1.addProductByCustomer(productsForMart, ProductIndexToAdd);
                                break;
                            case 4:
-                               customer1.CustomerCart.displayCartContents();
+                               customer1.ProductDisplayOfCustomerCart();
                                break;
                            case 5:
-                               customer1.CustomerCart.generateBill();
+                               customer1.generateBill();
                                break;
                            case 6:
                                System.out.println(" Exiting ...");
+                               exit(0);
                                break;
                            default:
                                System.out.println("Invalid choice");
                        }
                    }
                }
-*/
+
                default -> System.out.println("Invalid Choice");
            }
 
